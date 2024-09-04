@@ -1,43 +1,34 @@
 // app/routes/index.tsx
-import * as fs from "fs";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/start";
-
-const filePath = "count.txt";
-
-async function readCount() {
-  return parseInt(
-    await fs.promises.readFile(filePath, "utf-8").catch(() => "0")
-  );
-}
-
-const getCount = createServerFn("GET", () => {
-  return readCount();
-});
-
-const updateCount = createServerFn("POST", async (addBy: number) => {
-  const count = await readCount();
-  await fs.promises.writeFile(filePath, `${count + addBy}`);
-});
+import { Event } from "../types";
 
 export const Route = createFileRoute("/")({
   component: Home,
-  loader: async () => await getCount(),
+  loader: async () =>
+    await fetch("http://localhost:3000/api/events").then(
+      (res) => res.json() as Promise<{ events: Event[] }>
+    ),
 });
 
 function Home() {
   const router = useRouter();
-  const state = Route.useLoaderData();
+  const { events } = Route.useLoaderData();
 
   return (
-    <button
-      onClick={() => {
-        updateCount(1).then(() => {
+    <main>
+      <h1>Events</h1>
+      <ul>
+        {events.map((event) => (
+          <li key={event.name}>{event.name}</li>
+        ))}
+      </ul>
+      <button
+        onClick={() => {
           router.invalidate();
-        });
-      }}
-    >
-      Add 1 to {state}?
-    </button>
+        }}
+      >
+        Reload
+      </button>
+    </main>
   );
 }
