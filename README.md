@@ -5,7 +5,7 @@ Just a TanStack Start playground, themed as a platform to sign up for upcoming e
 ## Features
 
 - [x] Show events from API endpoint
-- [ ] Read events from a database
+- [x] Read events from a database
 - [ ] Authentication
 - [ ] Sign up for an event
 - [ ] List users signed up for an event

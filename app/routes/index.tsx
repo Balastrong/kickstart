@@ -1,24 +1,21 @@
 // app/routes/index.tsx
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { Event } from "../types";
+import { eventQueries } from "~/queries";
 
 export const Route = createFileRoute("/")({
   component: Home,
-  loader: async () =>
-    await fetch("http://localhost:3000/api/events").then(
-      (res) => res.json() as Promise<{ events: Event[] }>
-    ),
 });
 
 function Home() {
   const router = useRouter();
-  const { events } = Route.useLoaderData();
+  const eventsQuery = useSuspenseQuery(eventQueries.list());
 
   return (
     <main>
       <h1>Events</h1>
       <ul>
-        {events.map((event) => (
+        {eventsQuery.data.map((event) => (
           <li key={event.name}>{event.name}</li>
         ))}
       </ul>

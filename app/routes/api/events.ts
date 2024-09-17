@@ -4,7 +4,7 @@ import { createAPIFileRoute } from "@tanstack/start/api";
 const events = [
   { name: "React SuperConf", participants: [] },
   { name: "TanStack Global Meet", participants: [] },
-  { name: "Local Cozy Meetup2", participants: [] },
+  { name: "Local Cozy Meetup", participants: [] },
 ];
 
 export const Route = createAPIFileRoute("/api/events")({
