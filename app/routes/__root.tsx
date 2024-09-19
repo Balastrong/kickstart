@@ -1,5 +1,5 @@
 // app/routes/__root.tsx
-import { createRootRoute } from "@tanstack/react-router";
+import { createRootRoute, Link } from "@tanstack/react-router";
 import { Outlet, ScrollRestoration } from "@tanstack/react-router";
 import { Body, Head, Html, Meta, Scripts } from "@tanstack/start";
 import * as React from "react";
@@ -35,6 +35,28 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Meta />
       </Head>
       <Body>
+        <header className="p-2 flex gap-2 text-lg">
+          <div>
+            <Link
+              to="/"
+              activeProps={{
+                className: "font-bold",
+              }}
+              activeOptions={{ exact: true }}
+            >
+              KickStart
+            </Link>
+          </div>
+          <div className="ml-auto">
+            {/* <SignedIn>
+              <UserButton />
+            </SignedIn>
+            <SignedOut>
+              <SignInButton mode="modal" />
+            </SignedOut> */}
+          </div>
+        </header>
+        <hr />
         {children}
         <ScrollRestoration />
         <Scripts />

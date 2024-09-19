@@ -1,6 +1,7 @@
 // app/routes/index.tsx
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { EventCard } from "~/components/event-card";
 import { Button } from "~/components/ui/button";
 import { eventQueries } from "~/queries";
 
@@ -13,20 +14,13 @@ function Home() {
   const eventsQuery = useSuspenseQuery(eventQueries.list());
 
   return (
-    <main>
-      <h1>Events</h1>
-      <ul>
+    <main className="flex flex-col items-center">
+      <h1 className="text-2xl mt-10 mb-6">Events</h1>
+      <div className="flex flex-col gap-4 min-w-96">
         {eventsQuery.data.map((event) => (
-          <li key={event.name}>{event.name}</li>
+          <EventCard key={event._id} event={event} />
         ))}
-      </ul>
-      <Button
-        onClick={() => {
-          router.invalidate();
-        }}
-      >
-        Reload
-      </Button>
+      </div>
     </main>
   );
 }
