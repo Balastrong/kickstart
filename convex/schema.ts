@@ -6,4 +6,9 @@ export default defineSchema({
     name: v.string(),
     participants: v.array(v.string()),
   }),
+  users: defineTable({
+    name: v.string(),
+    // this the Clerk ID, stored in the subject JWT field
+    externalId: v.string(),
+  }).index("byExternalId", ["externalId"]),
 });

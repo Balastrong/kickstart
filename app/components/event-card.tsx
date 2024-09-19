@@ -1,6 +1,5 @@
 import { SignInButton } from "@clerk/clerk-react";
 import { Authenticated, Unauthenticated } from "convex/react";
-import { Event } from "~/types";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -10,12 +9,16 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { Doc } from "convex/_generated/dataModel";
+import { useRsvpMutation } from "~/queries";
 
 type Props = {
-  event: Event;
+  event: Doc<"events">;
 };
 
 export const EventCard = ({ event }: Props) => {
+  const rsvpMutation = useRsvpMutation();
+
   return (
     <Card>
       <CardHeader>
@@ -31,7 +34,9 @@ export const EventCard = ({ event }: Props) => {
       </CardContent>
       <CardFooter>
         <Authenticated>
-          <Button onClick={() => console.log("Register")}>RSVP</Button>
+          <Button onClick={() => rsvpMutation.mutate({ eventId: event._id })}>
+            RSVP
+          </Button>
         </Authenticated>
         <Unauthenticated>
           <SignInButton />
