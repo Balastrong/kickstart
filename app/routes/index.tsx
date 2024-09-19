@@ -1,6 +1,7 @@
 // app/routes/index.tsx
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { Button } from "~/components/ui/button";
 import { eventQueries } from "~/queries";
 
 export const Route = createFileRoute("/")({
@@ -19,13 +20,13 @@ function Home() {
           <li key={event.name}>{event.name}</li>
         ))}
       </ul>
-      <button
+      <Button
         onClick={() => {
           router.invalidate();
         }}
       >
         Reload
-      </button>
+      </Button>
     </main>
   );
 }
