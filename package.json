@@ -4,8 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "pnpm dlx convex dev --once && pnpm dev:web",
-    "dev:web": "vinxi dev",
+    "dev": "vinxi dev",
+    "dev:convex": "pnpm dlx convex dev --once",
     "build": "vinxi build",
     "start": "vinxi start"
   },
