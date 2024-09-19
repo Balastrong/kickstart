@@ -9,6 +9,8 @@ import {
 } from "@tanstack/react-router";
 import { Body, Head, Html, Meta, Scripts } from "@tanstack/start";
 import * as React from "react";
+// @ts-expect-error
+import css from "~/globals.css?url";
 
 export const Route = createRootRoute({
   meta: () => [
@@ -21,6 +23,12 @@ export const Route = createRootRoute({
     },
     {
       title: "TanStack Start Starter",
+    },
+  ],
+  links: () => [
+    {
+      rel: "stylesheet",
+      href: css,
     },
   ],
   component: RootComponent,
