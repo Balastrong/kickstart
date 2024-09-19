@@ -61,22 +61,31 @@ export const getEvent = query({
 });
 
 export const rsvp = mutation({
-  args: { eventId: v.id("events") },
-  handler: async (ctx, { eventId }) => {
+  args: { eventId: v.id("events"), going: v.optional(v.boolean()) },
+  handler: async (ctx, { eventId, going }) => {
     const user = await getCurrentUserOrThrow(ctx);
-
     const event = await ctx.db.get(eventId);
 
     if (!event) {
       throw new Error("Event not found");
     }
 
-    if (event.participants.includes(user._id)) {
-      return;
+    const isParticipant = event.participants.includes(user._id);
+
+    if (going === undefined) {
+      going = !isParticipant;
     }
 
-    await ctx.db.patch(eventId, {
-      participants: [...event?.participants, user._id],
-    });
+    if (going && !isParticipant) {
+      await ctx.db.patch(eventId, {
+        participants: [...event.participants, user._id],
+      });
+    } else if (!going && isParticipant) {
+      await ctx.db.patch(eventId, {
+        participants: event.participants.filter((id) => id !== user._id),
+      });
+    } else {
+      console.log("No changes needed");
+    }
   },
 });
