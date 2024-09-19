@@ -1,5 +1,5 @@
 import { internalMutation, query, QueryCtx } from "./_generated/server";
-//import { UserJSON } from "@clerk/backend";
+import { UserJSON } from "@clerk/backend";
 import { v, Validator } from "convex/values";
 
 export const current = query({
@@ -10,11 +10,12 @@ export const current = query({
 });
 
 export const upsertFromClerk = internalMutation({
-  args: { data: v.any() as Validator<any> }, // no runtime validation, trust Clerk
+  args: { data: v.any() as Validator<UserJSON> },
   async handler(ctx, { data }) {
     const userAttributes = {
       name: `${data.first_name} ${data.last_name}`,
       externalId: data.id,
+      pictureUrl: data.image_url,
     };
 
     const user = await userByExternalId(ctx, data.id);

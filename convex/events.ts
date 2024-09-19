@@ -1,6 +1,29 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { getCurrentUserOrThrow } from "./users";
+import { DataModel, Doc } from "./_generated/dataModel";
+import { GenericQueryCtx, SchemaDefinition } from "convex/server";
+
+function isDefined<T>(value: T | undefined | null): value is T {
+  return !!value;
+}
+
+const getEventParticipants = async (
+  ctx: GenericQueryCtx<DataModel>,
+  event: Doc<"events">
+) => {
+  return await Promise.allSettled(
+    event.participants.map(async (userId) => {
+      return await ctx.db.get(userId);
+    })
+  ).then((results) =>
+    results
+      .map((result) =>
+        result.status === "fulfilled" ? result.value : undefined
+      )
+      .filter(isDefined)
+  );
+};
 
 export const getEvents = query({
   handler: async (ctx) => {
@@ -8,17 +31,7 @@ export const getEvents = query({
 
     return Promise.all(
       events.map(async (event) => {
-        const participants = await Promise.allSettled(
-          event.participants.map(async (userId) => {
-            return await ctx.db.get(userId);
-          })
-        ).then((results) =>
-          results
-            .map((result) =>
-              result.status === "fulfilled" ? result.value : null
-            )
-            .filter(Boolean)
-        );
+        const participants = await getEventParticipants(ctx, event);
 
         return {
           ...event,
@@ -38,11 +51,7 @@ export const getEvent = query({
       throw new Error("Event not found");
     }
 
-    const participants = await Promise.all(
-      event.participants.map(async (userId) => {
-        return await ctx.db.get(userId);
-      })
-    );
+    const participants = await getEventParticipants(ctx, event);
 
     return {
       ...event,

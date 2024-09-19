@@ -28,7 +28,14 @@ export const EventCard = ({ event }: Props) => {
         <CardDescription>Participants:</CardDescription>
         <ul>
           {event.participants.map((participant) => (
-            <li key={participant?._id}>{participant?.name}</li>
+            <li key={participant._id}>
+              <img
+                src={participant.pictureUrl}
+                alt={participant.name}
+                className="w-6 h-6 rounded-full"
+              />
+              {participant.name}
+            </li>
           ))}
         </ul>
       </CardContent>

@@ -9,6 +9,7 @@ export default defineSchema({
   }),
   users: defineTable({
     name: v.string(),
+    pictureUrl: v.optional(v.string()),
     externalId: v.string(), // Clerk user ID
   }).index("byExternalId", ["externalId"]),
 });
