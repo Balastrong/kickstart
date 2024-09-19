@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vinxi dev",
-    "dev:convex": "pnpm dlx convex dev --once",
+    "dev:convex": "pnpm dlx convex dev",
+    "convex:once": "pnpm dev:convex --once",
     "build": "vinxi build",
     "start": "vinxi start"
   },

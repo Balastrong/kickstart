@@ -1,5 +1,7 @@
 import { SignInButton } from "@clerk/clerk-react";
 import { Authenticated, Unauthenticated } from "convex/react";
+import { EventWithParticipants } from "convex/schema";
+import { useRsvpMutation } from "~/queries";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -9,11 +11,9 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Doc } from "convex/_generated/dataModel";
-import { useRsvpMutation } from "~/queries";
 
 type Props = {
-  event: Doc<"events">;
+  event: EventWithParticipants;
 };
 
 export const EventCard = ({ event }: Props) => {
@@ -27,8 +27,8 @@ export const EventCard = ({ event }: Props) => {
       <CardContent>
         <CardDescription>Participants:</CardDescription>
         <ul>
-          {event.participants.map((participant, index) => (
-            <li key={index}>{participant}</li>
+          {event.participants.map((participant) => (
+            <li key={participant?._id}>{participant?.name}</li>
           ))}
         </ul>
       </CardContent>
