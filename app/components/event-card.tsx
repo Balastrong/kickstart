@@ -1,14 +1,15 @@
+import { SignInButton } from "@clerk/clerk-react";
+import { Authenticated, Unauthenticated } from "convex/react";
 import { Event } from "~/types";
-import { Card } from "./ui/card";
+import { Button } from "./ui/button";
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
 } from "./ui/card";
-// import { SignedIn, SignedOut, SignInButton } from "@clerk/tanstack-start";
-import { Button } from "./ui/button";
 
 type Props = {
   event: Event;
@@ -29,12 +30,12 @@ export const EventCard = ({ event }: Props) => {
         </ul>
       </CardContent>
       <CardFooter>
-        {/* <SignedIn>
+        <Authenticated>
           <Button onClick={() => console.log("Register")}>RSVP</Button>
-        </SignedIn>
-        <SignedOut>
+        </Authenticated>
+        <Unauthenticated>
           <SignInButton />
-        </SignedOut> */}
+        </Unauthenticated>
       </CardFooter>
     </Card>
   );

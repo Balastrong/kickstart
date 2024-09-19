@@ -1,16 +1,17 @@
-import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import {
   MutationCache,
   QueryClient,
   notifyManager,
 } from "@tanstack/react-query";
+import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 //import toast from "react-hot-toast";
 import { ConvexQueryClient } from "@convex-dev/react-query";
-import { ConvexProvider } from "convex/react";
+import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { routeTree } from "./routeTree.gen";
 // import { DefaultCatchBoundary } from "./components/DefaultCatchBoundary";
 // import { NotFound } from "./components/NotFound";
+import { ClerkProvider, useAuth } from "@clerk/clerk-react";
 
 export function createRouter() {
   if (typeof document !== "undefined") {
@@ -46,9 +47,14 @@ export function createRouter() {
       defaultNotFoundComponent: () => "Not found!",
       context: { queryClient },
       Wrap: ({ children }) => (
-        <ConvexProvider client={convexQueryClient.convexClient}>
-          {children}
-        </ConvexProvider>
+        <ClerkProvider publishableKey="pk_test_bW9kZXJuLXN0dXJnZW9uLTEuY2xlcmsuYWNjb3VudHMuZGV2JA">
+          <ConvexProviderWithClerk
+            client={convexQueryClient.convexClient}
+            useAuth={useAuth}
+          >
+            {children}
+          </ConvexProviderWithClerk>
+        </ClerkProvider>
       ),
     }) as any,
     queryClient

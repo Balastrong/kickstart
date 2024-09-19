@@ -1,6 +1,12 @@
 // app/routes/__root.tsx
-import { createRootRoute, Link } from "@tanstack/react-router";
-import { Outlet, ScrollRestoration } from "@tanstack/react-router";
+import { SignInButton, UserButton } from "@clerk/clerk-react";
+import { Authenticated, Unauthenticated } from "convex/react";
+import {
+  createRootRoute,
+  Link,
+  Outlet,
+  ScrollRestoration,
+} from "@tanstack/react-router";
 import { Body, Head, Html, Meta, Scripts } from "@tanstack/start";
 import * as React from "react";
 
@@ -48,12 +54,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             </Link>
           </div>
           <div className="ml-auto">
-            {/* <SignedIn>
+            <Authenticated>
               <UserButton />
-            </SignedIn>
-            <SignedOut>
+            </Authenticated>
+            <Unauthenticated>
               <SignInButton mode="modal" />
-            </SignedOut> */}
+            </Unauthenticated>
+            {/* <AuthLoading>•</AuthLoading> */}
           </div>
         </header>
         <hr />
