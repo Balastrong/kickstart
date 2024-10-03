@@ -1,6 +1,7 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 import { getEvent } from "./events";
+import { getComments } from "./comments";
 
 export default defineSchema({
   events: defineTable({
@@ -21,3 +22,5 @@ export default defineSchema({
 });
 
 export type EventWithParticipants = Awaited<ReturnType<typeof getEvent>>;
+
+export type CommentWithUser = Awaited<ReturnType<typeof getComments>>[number];

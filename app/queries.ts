@@ -24,3 +24,9 @@ export function usePostCommentMutation() {
 
   return useMutation({ mutationFn });
 }
+
+export function useDeleteCommentMutation() {
+  const mutationFn = useConvexMutation(api.comments.deleteComment);
+
+  return useMutation({ mutationFn });
+}

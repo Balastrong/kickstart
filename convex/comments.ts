@@ -10,7 +10,16 @@ export const getComments = query({
       .withIndex("by_event", (q) => q.eq("event", eventId))
       .collect();
 
-    return comments;
+    const users = await Promise.all(
+      [...new Set(comments.map((comment) => comment.user))].map((userId) =>
+        ctx.db.get(userId)
+      )
+    );
+
+    return comments.map((comment) => ({
+      ...comment,
+      user: users.find((user) => user?._id === comment.user),
+    }));
   },
 });
 
@@ -29,5 +38,23 @@ export const postComment = mutation({
       user: user._id,
       text,
     });
+  },
+});
+
+export const deleteComment = mutation({
+  args: { commentId: v.id("comments") },
+  handler: async (ctx, { commentId }) => {
+    const user = await getCurrentUserOrThrow(ctx);
+    const comment = await ctx.db.get(commentId);
+
+    if (!comment) {
+      throw new Error("Comment not found");
+    }
+
+    if (comment.user !== user._id) {
+      throw new Error("Unauthorized");
+    }
+
+    await ctx.db.delete(commentId);
   },
 });

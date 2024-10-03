@@ -5,6 +5,7 @@ import { EventWithParticipants } from "convex/schema";
 import { useState } from "react";
 import {
   commentsQueries,
+  useDeleteCommentMutation,
   usePostCommentMutation,
   useRsvpMutation,
 } from "~/queries";
@@ -19,6 +20,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Input } from "./ui/input";
+import { CommentsBoard } from "./comments-board";
 
 type Props = {
   event: EventWithParticipants;
@@ -26,7 +28,6 @@ type Props = {
 
 export const EventCard = ({ event }: Props) => {
   const rsvpMutation = useRsvpMutation();
-  const postCommentMutation = usePostCommentMutation();
   const { userId } = useAuth();
   const [showComments, setShowComments] = useState(false);
   const commentsQuery = useQuery(commentsQueries.list(event._id));
@@ -35,30 +36,12 @@ export const EventCard = ({ event }: Props) => {
     (participant) => participant.externalId === userId
   );
 
-  const onSendComment = (formEvent: React.FormEvent<HTMLFormElement>) => {
-    formEvent.preventDefault();
-    const target = formEvent.currentTarget;
-
-    const formData = new FormData(target);
-    const text = formData.get("comment") as string;
-
-    postCommentMutation.mutate(
-      { eventId: event._id, text },
-      {
-        onSuccess: () => {
-          console.log("Comment posted!");
-          target.reset();
-        },
-      }
-    );
-  };
-
   return (
     <Card>
       <CardHeader>
         <CardTitle>{event.name}</CardTitle>
         <CardDescription>
-          {new Date(event.date!).toLocaleDateString()}
+          {new Date(event.date).toLocaleDateString()}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -110,20 +93,10 @@ export const EventCard = ({ event }: Props) => {
               </Button>
             </div>
             {showComments && (
-              <div className="mt-4">
-                <h4 className="mb-2">Comments</h4>
-                <ul>
-                  {commentsQuery.data?.map((comment) => (
-                    <li key={comment._id}>
-                      <div>{comment.text}</div>
-                    </li>
-                  ))}
-                </ul>
-                <form className="flex gap-2" onSubmit={onSendComment}>
-                  <Input placeholder="Add a comment" name="comment" />
-                  <Button size={"sm"}>Post</Button>
-                </form>
-              </div>
+              <CommentsBoard
+                eventId={event._id}
+                commentsQuery={commentsQuery}
+              />
             )}
           </div>
         </Authenticated>
