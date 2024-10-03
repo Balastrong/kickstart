@@ -13,6 +13,11 @@ export default defineSchema({
     pictureUrl: v.optional(v.string()),
     externalId: v.string(), // Clerk user ID
   }).index("byExternalId", ["externalId"]),
+  comments: defineTable({
+    event: v.id("events"),
+    user: v.id("users"),
+    text: v.string(),
+  }).index("by_event", ["event"]),
 });
 
 export type EventWithParticipants = Awaited<ReturnType<typeof getEvent>>;

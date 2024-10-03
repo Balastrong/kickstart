@@ -12,12 +12,8 @@ export const EventCardSkeleton = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>
-          <Skeleton className="h-8 w-44" />
-        </CardTitle>
-        <CardDescription>
-          <Skeleton className="h-5 w-20" />
-        </CardDescription>
+        <Skeleton className="h-8 w-44" />
+        <Skeleton className="h-5 w-20" />
       </CardHeader>
       <CardContent>
         <h3 className="mb-2">
