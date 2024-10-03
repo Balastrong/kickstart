@@ -1,15 +1,16 @@
+import { useAuth } from "@clerk/clerk-react";
+import { UseQueryResult } from "@tanstack/react-query";
+import { Id } from "convex/_generated/dataModel";
+import { CommentWithUser } from "convex/schema";
 import {
   commentsQueries,
   useDeleteCommentMutation,
   usePostCommentMutation,
 } from "~/queries";
+import { formatDateTime } from "~/utils/date";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { UseQueryResult } from "@tanstack/react-query";
-import { Id } from "convex/_generated/dataModel";
-import { useAuth } from "@clerk/clerk-react";
-import { CommentWithUser } from "convex/schema";
 
 type Props = {
   eventId: Id<"events">;
@@ -57,7 +58,7 @@ export const CommentsBoard = ({ eventId, commentsQuery }: Props) => {
                 </span>
                 <span className="text-gray-600"> • </span>
                 <span className="italic">
-                  {new Date(comment._creationTime).toLocaleDateString()}
+                  {formatDateTime(new Date(comment._creationTime))}
                 </span>
               </span>
               <span className="text-sm text-gray-600">{comment.text}</span>

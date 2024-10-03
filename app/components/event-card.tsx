@@ -1,14 +1,11 @@
 import { SignInButton, useAuth } from "@clerk/clerk-react";
 import { useQuery } from "@tanstack/react-query";
-import { Authenticated, Unauthenticated } from "convex/react";
+import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
 import { EventWithParticipants } from "convex/schema";
 import { useState } from "react";
-import {
-  commentsQueries,
-  useDeleteCommentMutation,
-  usePostCommentMutation,
-  useRsvpMutation,
-} from "~/queries";
+import { commentsQueries, useRsvpMutation } from "~/queries";
+import { formatDate } from "~/utils/date";
+import { CommentsBoard } from "./comments-board";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import {
@@ -19,8 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Input } from "./ui/input";
-import { CommentsBoard } from "./comments-board";
+import { Skeleton } from "./ui/skeleton";
 
 type Props = {
   event: EventWithParticipants;
@@ -40,9 +36,7 @@ export const EventCard = ({ event }: Props) => {
     <Card>
       <CardHeader>
         <CardTitle>{event.name}</CardTitle>
-        <CardDescription>
-          {new Date(event.date).toLocaleDateString()}
-        </CardDescription>
+        <CardDescription>{formatDate(new Date(event.date))}</CardDescription>
       </CardHeader>
       <CardContent>
         <h3 className="mb-2">Participants: {event.participants.length}</h3>
@@ -105,6 +99,9 @@ export const EventCard = ({ event }: Props) => {
             <Button size={"sm"}>Sign in to RSVP</Button>
           </SignInButton>
         </Unauthenticated>
+        <AuthLoading>
+          <Skeleton className="h-8 w-32" />
+        </AuthLoading>
       </CardFooter>
     </Card>
   );
