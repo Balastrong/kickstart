@@ -1,4 +1,3 @@
-// app/api.ts
 import {
   createStartAPIHandler,
   defaultAPIFileRouteHandler,

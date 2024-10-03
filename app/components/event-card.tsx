@@ -29,7 +29,9 @@ export const EventCard = ({ event }: Props) => {
     <Card>
       <CardHeader>
         <CardTitle>{event.name}</CardTitle>
-        <CardDescription>Tomorrow</CardDescription>
+        <CardDescription>
+          {new Date(event.date!).toLocaleDateString()}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <h3 className="mb-2">Participants: {event.participants.length}</h3>
@@ -70,7 +72,9 @@ export const EventCard = ({ event }: Props) => {
           )}
         </Authenticated>
         <Unauthenticated>
-          <SignInButton />
+          <SignInButton>
+            <Button size={"sm"}>Sign in to RSVP</Button>
+          </SignInButton>
         </Unauthenticated>
       </CardFooter>
     </Card>

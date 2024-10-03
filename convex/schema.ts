@@ -6,6 +6,7 @@ export default defineSchema({
   events: defineTable({
     name: v.string(),
     participants: v.array(v.id("users")),
+    date: v.string(),
   }),
   users: defineTable({
     name: v.string(),

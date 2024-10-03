@@ -1,4 +1,3 @@
-// app/routes/index.tsx
 import { createFileRoute } from "@tanstack/react-router";
 import React from "react";
 import { EventCardSkeleton } from "~/components/event-card-skeleton";
