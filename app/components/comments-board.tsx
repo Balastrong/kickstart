@@ -47,15 +47,17 @@ export const CommentsBoard = ({ eventId, commentsQuery }: Props) => {
             <Avatar className="size-8 mr-2">
               <AvatarImage
                 src={comment.user?.pictureUrl}
-                alt={comment.user?.name}
+                alt={comment.user?.username}
               />
             </Avatar>
             <div className="flex flex-col flex-grow">
               <span className="text-sm">
-                <span className="font-semibold">{comment.user?.name}</span>
+                <span className="font-semibold">
+                  {comment.user?.username ?? "???"}
+                </span>
                 <span className="text-gray-600"> • </span>
                 <span className="italic">
-                  {new Date(comment._creationTime).toDateString()}
+                  {new Date(comment._creationTime).toLocaleDateString()}
                 </span>
               </span>
               <span className="text-sm text-gray-600">{comment.text}</span>

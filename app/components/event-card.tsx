@@ -52,7 +52,7 @@ export const EventCard = ({ event }: Props) => {
               <Avatar className="size-8">
                 <AvatarImage
                   src={participant.pictureUrl}
-                  alt={participant.name}
+                  alt={participant.username}
                 />
               </Avatar>
             </li>
