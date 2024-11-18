@@ -58,3 +58,29 @@ export const deleteComment = mutation({
     await ctx.db.delete(commentId);
   },
 });
+
+export const likeComment = mutation({
+  args: { commentId: v.id("comments") },
+  handler: async (ctx, { commentId }) => {
+    const user = await getCurrentUserOrThrow(ctx);
+    const comment = await ctx.db.get(commentId);
+
+    if (!comment) {
+      throw new Error("Comment not found");
+    }
+
+    if (!comment.likes) {
+      comment.likes = [];
+    }
+
+    if (comment.likes.includes(user._id)) {
+      await ctx.db.patch(commentId, {
+        likes: comment.likes.filter((id) => id !== user._id),
+      });
+    } else {
+      await ctx.db.patch(commentId, {
+        likes: [...comment.likes, user._id],
+      });
+    }
+  },
+});

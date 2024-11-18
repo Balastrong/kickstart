@@ -20,6 +20,7 @@ export default defineSchema({
     event: v.id("events"),
     user: v.id("users"),
     text: v.string(),
+    likes: v.optional(v.array(v.id("users"))),
   }).index("by_event", ["event"]),
 });
 

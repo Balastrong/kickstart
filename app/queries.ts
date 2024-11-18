@@ -30,3 +30,9 @@ export function useDeleteCommentMutation() {
 
   return useMutation({ mutationFn });
 }
+
+export function useLikeCommentMutation() {
+  const mutationFn = useConvexMutation(api.comments.likeComment);
+
+  return useMutation({ mutationFn });
+}
