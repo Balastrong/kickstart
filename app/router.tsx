@@ -47,7 +47,9 @@ export function createRouter() {
       defaultNotFoundComponent: () => "Not found!",
       context: { queryClient },
       Wrap: ({ children }) => (
-        <ClerkProvider publishableKey="pk_test_bW9kZXJuLXN0dXJnZW9uLTEuY2xlcmsuYWNjb3VudHMuZGV2JA">
+        <ClerkProvider
+          publishableKey={(import.meta as any).env.VITE_CLERK_PUBLISHABLE_KEY!}
+        >
           <ConvexProviderWithClerk
             client={convexQueryClient.convexClient}
             useAuth={useAuth}
