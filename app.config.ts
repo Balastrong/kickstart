@@ -9,4 +9,7 @@ export default defineConfig({
       }),
     ],
   },
+  server: {
+    compatibilityDate: "2025-01-02",
+  },
 });
