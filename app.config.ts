@@ -10,6 +10,7 @@ export default defineConfig({
     ],
   },
   server: {
+    preset: "netlify",
     compatibilityDate: "2025-01-02",
   },
 });
