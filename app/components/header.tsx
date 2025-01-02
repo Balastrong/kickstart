@@ -1,23 +1,14 @@
 import { SignInButton, UserButton } from "@clerk/clerk-react";
+import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Link } from "@tanstack/react-router";
 import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
 import { Skeleton } from "~/components/ui/skeleton";
-import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
-import { Button } from "./ui/button";
 
 export const Header = () => {
   return (
     <header className="px-4 py-2 flex gap-2 items-center justify-between max-w-screen-2xl mx-auto">
       <div className="text-xl leading-loose">
-        <Link
-          to="/"
-          activeProps={{
-            className: "font-bold",
-          }}
-          activeOptions={{ exact: true }}
-        >
-          KickStart
-        </Link>
+        <Link to="/">KickStart</Link>
       </div>
       <div className="flex gap-4 items-center">
         <a

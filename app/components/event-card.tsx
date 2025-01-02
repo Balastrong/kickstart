@@ -17,6 +17,8 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
+import { Badge } from "./ui/badge";
+import { getRouteApi } from "@tanstack/react-router";
 
 type Props = {
   event: EventWithParticipants;
@@ -27,6 +29,7 @@ export const EventCard = ({ event }: Props) => {
   const { userId } = useAuth();
   const [showComments, setShowComments] = useState(false);
   const commentsQuery = useQuery(commentsQueries.list(event._id));
+  const { filters = [] } = getRouteApi("/").useSearch();
 
   const isParticipating = event.participants.some(
     (participant) => participant.externalId === userId
@@ -34,6 +37,16 @@ export const EventCard = ({ event }: Props) => {
 
   return (
     <Card>
+      <div className="flex gap-1 pt-6 px-6 -mb-2">
+        {event.tags?.map((tag) => (
+          <Badge
+            key={tag}
+            variant={filters.includes(tag) ? "default" : "outline"}
+          >
+            {tag}
+          </Badge>
+        ))}
+      </div>
       <CardHeader>
         <CardTitle>{event.name}</CardTitle>
         <CardDescription>{formatDate(new Date(event.date))}</CardDescription>

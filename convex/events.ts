@@ -26,11 +26,17 @@ const getEventParticipants = async (
 };
 
 export const getEvents = query({
-  handler: async (ctx) => {
-    const events = await ctx.db.query("events").collect();
+  args: { filters: v.optional(v.array(v.string())) },
+  handler: async (ctx, { filters }) => {
+    const allEvents = await ctx.db.query("events").collect();
+    const filteredEvents = filters?.length
+      ? allEvents.filter((event) =>
+          event.tags?.some((t) => filters.includes(t))
+        )
+      : allEvents;
 
     return Promise.all(
-      events.map(async (event) => {
+      filteredEvents.map(async (event) => {
         const participants = await getEventParticipants(ctx, event);
 
         return {

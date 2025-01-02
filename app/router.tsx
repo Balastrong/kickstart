@@ -56,7 +56,7 @@ export function createRouter() {
           </ConvexProviderWithClerk>
         </ClerkProvider>
       ),
-    }) as any,
+    }),
     queryClient
   );
 

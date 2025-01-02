@@ -6,8 +6,13 @@ import { getComments } from "./comments";
 export default defineSchema({
   events: defineTable({
     name: v.string(),
-    participants: v.array(v.id("users")),
+    location: v.optional(v.string()),
     date: v.string(),
+    website: v.optional(v.string()),
+    participants: v.array(v.id("users")),
+    cfpUrl: v.optional(v.string()),
+    cfpEndDate: v.optional(v.string()),
+    tags: v.optional(v.array(v.string())),
   }),
   users: defineTable({
     firstName: v.optional(v.string()),

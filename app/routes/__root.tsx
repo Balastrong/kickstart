@@ -1,5 +1,6 @@
+import { QueryClient } from "@tanstack/react-query";
 import {
-  createRootRoute,
+  createRootRouteWithContext,
   Outlet,
   ScrollRestoration,
 } from "@tanstack/react-router";
@@ -9,7 +10,9 @@ import { Header } from "~/components/header";
 // @ts-expect-error
 import css from "~/globals.css?url";
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
   head: () => ({
     meta: [
       {

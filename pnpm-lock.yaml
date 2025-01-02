@@ -15,8 +15,8 @@ importers:
         specifier: ^5.21.0
         version: 5.21.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@convex-dev/react-query':
-        specifier: 0.0.0-alpha.5
-        version: 0.0.0-alpha.5(@tanstack/react-query@5.62.11(react@18.3.1))(convex@1.17.4(@clerk/clerk-react@5.21.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        specifier: 0.0.0-alpha.8
+        version: 0.0.0-alpha.8(@tanstack/react-query@5.62.11(react@18.3.1))(convex@1.17.4(@clerk/clerk-react@5.21.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@radix-ui/react-accordion':
         specifier: ^1.2.2
         version: 1.2.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -236,11 +236,11 @@ packages:
     resolution: {integrity: sha512-YLPHc8yASwjNkmcDMQMY35yiWjoKAKnhUbPRszBRS0YgH+IXtsMp61j+yTcnCE3oO2DgP0U3iejLC8FTtKDC8Q==}
     engines: {node: '>=16.13'}
 
-  '@convex-dev/react-query@0.0.0-alpha.5':
-    resolution: {integrity: sha512-/sd8fcEYit4UV5mM01j8ddeG9eBvlIxFkdRq2SR6l9XipIjgdhV+ybirHvr8iYZTdS4IejOk4t2iwzynOZSq8w==}
+  '@convex-dev/react-query@0.0.0-alpha.8':
+    resolution: {integrity: sha512-Rv/q7/CplU75f7ckBd2vh+HoeeQ0tOrjwMl14Hk7D/03e55oUIU0TV5JYYzC79ZQyyAtoj7CmCo5ZxcmtKNv1Q==}
     peerDependencies:
       '@tanstack/react-query': ^5.0.0
-      convex: ^1.13.0
+      convex: ^1.17.0
 
   '@deno/shim-deno-test@0.5.0':
     resolution: {integrity: sha512-4nMhecpGlPi0cSzT67L+Tm+GOJqvuk8gqHBziqcUQOarnuIax1z96/gJHCSIz2Z0zhxE6Rzwb3IZXPtFh51j+w==}
@@ -3682,7 +3682,7 @@ snapshots:
     dependencies:
       mime: 3.0.0
 
-  '@convex-dev/react-query@0.0.0-alpha.5(@tanstack/react-query@5.62.11(react@18.3.1))(convex@1.17.4(@clerk/clerk-react@5.21.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+  '@convex-dev/react-query@0.0.0-alpha.8(@tanstack/react-query@5.62.11(react@18.3.1))(convex@1.17.4(@clerk/clerk-react@5.21.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
       '@tanstack/react-query': 5.62.11(react@18.3.1)
       convex: 1.17.4(@clerk/clerk-react@5.21.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

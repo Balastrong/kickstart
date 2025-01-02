@@ -4,7 +4,8 @@ import { api } from "convex/_generated/api";
 import { Id } from "convex/_generated/dataModel";
 
 export const eventQueries = {
-  list: () => convexQuery(api.events.getEvents, {}),
+  list: ({ filters }: { filters: string[] }) =>
+    convexQuery(api.events.getEvents, { filters }),
   get: (eventId: Id<"events">) => convexQuery(api.events.getEvent, { eventId }),
 };
 
