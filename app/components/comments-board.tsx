@@ -1,24 +1,19 @@
 import { useAuth } from "@clerk/clerk-react";
-import { UseQueryResult } from "@tanstack/react-query";
 import { Id } from "convex/_generated/dataModel";
 import { CommentWithUser } from "convex/schema";
 import {
-  commentsQueries,
   useDeleteCommentMutation,
-  usePostCommentMutation,
   useLikeCommentMutation,
+  usePostCommentMutation,
 } from "~/queries";
-import { useUser } from "@clerk/clerk-react";
-
 import { formatDateTime } from "~/utils/date";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { useConvexAuth } from "convex/react";
 
 type Props = {
   eventId: Id<"events">;
-  commentsQuery: UseQueryResult<CommentWithUser[]>;
+  commentsQuery: CommentWithUser[];
 };
 export const CommentsBoard = ({ eventId, commentsQuery }: Props) => {
   const { userId } = useAuth();
@@ -44,11 +39,19 @@ export const CommentsBoard = ({ eventId, commentsQuery }: Props) => {
     );
   };
 
+  const onDeleteComment = (commentId: Id<"comments">) => {
+    deleteCommentMutation.mutate({ commentId });
+  };
+
+  const onLikeComment = (commentId: Id<"comments">) => {
+    likeCommentMutation.mutate({ commentId });
+  };
+
   return (
     <div className="mt-4">
       <h4 className="mb-2 text-lg">Comments</h4>
       <ul>
-        {commentsQuery.data?.map((comment) => {
+        {commentsQuery.map((comment) => {
           return (
             <li key={comment._id} className="flex items-start mb-4">
               <Avatar className="size-8 mr-2">
@@ -72,11 +75,7 @@ export const CommentsBoard = ({ eventId, commentsQuery }: Props) => {
                   <Button
                     variant={"ghost"}
                     className={"text-primary hover:text-primary/80"}
-                    onClick={() =>
-                      likeCommentMutation.mutate({
-                        commentId: comment._id,
-                      })
-                    }
+                    onClick={() => onLikeComment(comment._id)}
                   >
                     Like ({comment.likes?.length ?? 0})
                   </Button>
@@ -84,11 +83,7 @@ export const CommentsBoard = ({ eventId, commentsQuery }: Props) => {
                     <Button
                       variant={"ghost"}
                       className="text-destructive hover:text-destructive/80"
-                      onClick={() =>
-                        deleteCommentMutation.mutate({
-                          commentId: comment._id,
-                        })
-                      }
+                      onClick={() => onDeleteComment(comment._id)}
                     >
                       Delete
                     </Button>

@@ -28,7 +28,7 @@ export const EventCard = ({ event }: Props) => {
   const rsvpMutation = useRsvpMutation();
   const { userId } = useAuth();
   const [showComments, setShowComments] = useState(false);
-  const commentsQuery = useQuery(commentsQueries.list(event._id));
+  const { data: comments = [] } = useQuery(commentsQueries.list(event._id));
   const { filters = [] } = getRouteApi("/").useSearch();
 
   const isParticipating = event.participants.some(
@@ -95,15 +95,11 @@ export const EventCard = ({ event }: Props) => {
                 size={"sm"}
                 onClick={() => setShowComments((prev) => !prev)}
               >
-                {showComments ? "Hide" : "Show"} Comments (
-                {commentsQuery.data?.length ?? 0})
+                {showComments ? "Hide" : "Show"} Comments ({comments.length})
               </Button>
             </div>
             {showComments && (
-              <CommentsBoard
-                eventId={event._id}
-                commentsQuery={commentsQuery}
-              />
+              <CommentsBoard eventId={event._id} commentsQuery={comments} />
             )}
           </div>
         </Authenticated>
